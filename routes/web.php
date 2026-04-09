@@ -5,7 +5,9 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\RouteControllerView;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\WelcomeToBlog;
 use Illuminate\Routing\Events\Routing;
 use Illuminate\Support\Facades\Route;
 use Monolog\Processor\PsrLogMessageProcessor;
@@ -301,3 +303,37 @@ Route::resource('photos', PhotoController::class)->except([
 // ada dua cara agr kita bisa menggunakan resource controller sebagian saja, yaitu dengan menggunakan method only dan except, 
 // dimana method only digunakan untuk menentukan route yang ingin kita buat, sedangkan method except digunakan untuk menentukan route yang tidak ingin kita buat, dll
 
+
+// ---------------------------------------------------------------------------------
+
+// route to view atau blade
+
+// sebernanya route ke blade itu tidak terlalu di sarankan yang di sarankan itu adalah " route -> controller -> view " jadi kita membuat controller terlebih dahulu kemudian di dalam controller kita memanggil view yang ingin kita tampilkan, dll
+
+// contoh langsung ke view atau blade
+
+Route::get('/greeting', function () {
+    return view('hallo', ['name' => 'Nasril']);
+});
+
+// return view('hallo', = hallo di sini ada nama file yang ingin kita tujukan untuk menampilkan halaman hallo.blade
+
+// contoh menggunakan Route ke controller ke view atau blade
+
+Route::get('/testingcontroller', [RouteControllerView::class, 'index']);
+
+// yang di buka di website selalu /nama route nya, jadi kita harus menyesuaikan nama route dengan nama yang kita buat di controller, dll
+// semuanya entah itu route biasa, route resource, route view, dll semuanya bisa kita gunakan untuk menampilkan halaman view atau blade, tergantung kebutuhan kita, dll
+
+
+// jika view ada di daalam folder maka kita harus menuliskan nama foldernya juga, contoh : view('folder.hallo') untuk menampilkan file hallo.blade.php yang ada di dalam folder folder, dll
+
+Route::get('/greetings', function () {
+    return view('blog.hello-blog', ['name' => 'Nasril']);
+    
+});
+
+
+// controler view dengan compact
+
+Route::get('/hallo-blog', [WelcomeToBlog::class, 'index']);
